@@ -1,33 +1,35 @@
-import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
-import { baseUrl } from 'app/sitemap'
+import { formatDate, getBlogPosts } from "app/blog/utils";
+import { CustomMDX } from "app/components/mdx";
+import { baseUrl } from "app/sitemap";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const posts = await getBlogPosts()
+  const posts = await getBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
-  }))
+  }));
 }
 
 export async function generateMetadata({ params }) {
-  const posts = await getBlogPosts()
-  const { slug } = await params
-  const post = posts.find((post) => post.slug === slug)
+  const posts = await getBlogPosts();
+  const { slug } = await params;
+  const post = posts.find((post) => post.slug === slug);
 
-  if (!post) return
+  if (!post) {
+    return;
+  }
 
   const {
     title,
     publishedAt: publishedTime,
     summary: description,
     image,
-  } = post.metadata
+  } = post.metadata;
 
   const ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
@@ -35,39 +37,36 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      type: 'article',
+      type: "article",
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
       images: [{ url: ogImage }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
       images: [ogImage],
     },
-  }
+  };
 }
 
 export default async function Blog({ params }) {
-  const posts = await getBlogPosts()
-  const { slug } = await params
-  const post = posts.find((post) => post.slug === slug)
+  const posts = await getBlogPosts();
+  const { slug } = await params;
+  const post = posts.find((post) => post.slug === slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
     <section>
       <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
             headline: post.metadata.title,
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
@@ -77,11 +76,14 @@ export default async function Blog({ params }) {
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
             author: {
-              '@type': 'Person',
-              name: 'My Portfolio',
+              "@type": "Person",
+              name: "My Portfolio",
             },
           }),
         }}
+        suppressHydrationWarning
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        type="application/ld+json"
       />
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
@@ -95,5 +97,5 @@ export default async function Blog({ params }) {
         <CustomMDX source={post.content} />
       </article>
     </section>
-  )
+  );
 }

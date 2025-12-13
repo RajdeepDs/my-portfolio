@@ -7,9 +7,9 @@ export default function Footer() {
         <li>
           <a
             className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            href="https://github.com/RajdeepDs"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://github.com/RajdeepDs"
           >
             <ArrowUpRightIcon className="size-4 text-neutral-500" />
             <p className="ml-2">GitHub</p>
@@ -18,15 +18,26 @@ export default function Footer() {
         <li>
           <a
             className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            href="https://x.com/Rajdeep__ds"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://x.com/Rajdeep__ds"
           >
             <ArrowUpRightIcon className="size-4 text-neutral-500" />
             <p className="ml-2">X</p>
           </a>
         </li>
+        <li>
+          <a
+            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            href="mailto:rajdeepds626@gmail.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <ArrowUpRightIcon className="size-4 text-neutral-500" />
+            <p className="ml-2">Email</p>
+          </a>
+        </li>
       </ul>
     </footer>
-  )
+  );
 }
