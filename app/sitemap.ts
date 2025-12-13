@@ -1,4 +1,4 @@
-export const baseUrl = "https://rajdeepdas.me";
+export const baseUrl = "https://www.rajdeepdas.me";
 
 export default function sitemap() {
   const routes = ["", "/blog"].map((route) => ({
