@@ -9,11 +9,11 @@ type ProjectItemProps = {
 export function ProjectItem({ title, description, href }: ProjectItemProps) {
   return (
     <Link
-      className="group flex w-full flex-col items-start gap-0.5 rounded-md border border-neutral-300 border-dashed px-4 py-2 transition-colors duration-150 ease-initial hover:bg-neutral-50"
+      className="flex flex-col rounded-md border border-gray-300 border-dashed px-3 py-1 no-underline transition-colors duration-150 ease-initial hover:bg-neutral-50 sm:py-3"
       href={href}
     >
-      <h2 className="flex items-center gap-1 text-[1.5ch]">{title}</h2>
-      <p className="text-neutral-500 text-sm leading-6 tracking-wide">
+      <h2 className="flex items-center gap-1 text-[0.9375rem]">{title}</h2>
+      <p className="text-gray-500 text-sm leading-5 tracking-wide">
         {description}
       </p>
     </Link>

@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Figtree, Geist_Mono } from "next/font/google";
 import Footer from "./components/footer";
+import Header from "./components/header";
 import PageTransition from "./components/page-transition";
 import { baseUrl } from "./sitemap";
 
@@ -62,19 +63,17 @@ export default function RootLayout({
 }) {
   return (
     <html
-      className={cx(
-        "bg-white text-black dark:bg-black dark:text-white",
-        `${figTreeSans.variable} ${geistMono.variable}`
-      )}
+      className={cx(`${figTreeSans.variable} ${geistMono.variable}`)}
       lang="en"
     >
-      <body className="flex min-h-screen max-w-xl flex-col antialiased lg:mx-auto">
-        <main className="mt-10 flex min-w-0 flex-1 flex-col px-2 md:px-0">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <PageTransition>
-          <Footer />
-        </PageTransition>
+      <body className="bg-gray-50/20">
+        <div className="isolate mx-auto min-h-screen max-w-[692px] overflow-x-hidden px-4 py-12 text-gray-900 antialiased md:overflow-x-visible">
+          <PageTransition>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </PageTransition>
+        </div>
         <Analytics />
         <SpeedInsights />
       </body>

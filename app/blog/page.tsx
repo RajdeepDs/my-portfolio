@@ -1,6 +1,7 @@
 import { BlogPosts } from "app/components/blogs";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Blog",
   description: "Read my blog.",
 };
@@ -8,7 +9,7 @@ export const metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className="mb-8 font-semibold text-2xl tracking-tighter">My Blogs</h1>
+      <h1 className="mb-8 font-medium text-lg">My Blogs</h1>
       <BlogPosts />
     </section>
   );
