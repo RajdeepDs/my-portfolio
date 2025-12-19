@@ -67,13 +67,13 @@ export default function RootLayout({
       lang="en"
     >
       <body className="bg-gray-50/20">
-        <div className="isolate mx-auto min-h-screen max-w-[692px] overflow-x-hidden px-4 py-12 text-gray-900 antialiased md:overflow-x-visible">
-          <PageTransition>
+        <PageTransition>
+          <div className="isolate mx-auto flex min-h-screen max-w-[692px] flex-col overflow-x-hidden px-4 py-12 text-gray-900 antialiased md:overflow-x-visible">
             <Header />
-            <main>{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
-          </PageTransition>
-        </div>
+          </div>
+        </PageTransition>
         <Analytics />
         <SpeedInsights />
       </body>

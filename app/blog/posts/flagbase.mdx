@@ -1,0 +1,94 @@
+---
+title: "Why I'm Building a Feature Flag Tool I Never Used"
+publishedAt: '2025-12-15'
+summary: 'I’m building a feature flag management tool—but until recently, I’d never used one myself'
+---
+
+Hi! I'm Rajdeep — a React & TypeScript developer who enjoys building open-source products that solve real problems. Over the years, I’ve shipped a few projects:
+- **Coordinize** - an open-source async communication tool for global teams
+- **BuildIt** - an open-source alternative to Linear
+- **Flagbase** - a type-safe feature flag dev tool (currently in progress)
+
+I also contribute to **[Twenty](https://twenty.com)** and have previously made commits to **[Cal.com](https://cal.com/)**.
+
+For a long time, feature flags felt abstract to me. I knew what they were — a way to enable or disable features without redeploying, but I never felt enough pain to actually use one. Most of my projects were small enough that I could move fast without them.
+
+That changed when I started thinking about how features are actually used. I wanted a way to roll out a feature to a small group of users, see whether it was being used, iterate safely, and disable it if necessary, all without touching production code every time. I realized this wasn’t just about toggling features; it was about confidence, feedback, and control during development.
+
+And that’s when feature flags finally clicked for me.
+
+### When feature flags finally clicked
+
+Things changed when I started thinking less about shipping features and more about **how those features are actually used**.
+
+I wanted a way to:
+
+- roll out a feature to a small group of users,
+- see whether anyone was actually using it,
+- iterate safely without fear,
+- and disable it instantly if things went wrong.
+
+All of this — without touching production code every time.
+
+At that point, I realized feature flags weren’t just about toggling features. They were about **confidence**. Confidence to experiment. Confidence to ship early. Confidence to change direction without fear.
+
+### Why existing tools didn’t feel right (to me)
+
+Once I understood the value, I looked at existing feature flag tools. They’re powerful, battle-tested, and widely used but they didn’t quite fit how I like to build software.
+
+Most tools rely heavily on:
+
+- string-based flags,
+- runtime-only validation,
+- dashboards that drift from code,
+- and patterns that don’t play nicely with TypeScript’s strengths.
+
+As a TypeScript developer, this felt wrong. I’m used to getting feedback at compile time. I want my editor to tell me when I’ve made a mistake-not production.
+
+The core problem, for me, wasn’t feature flags themselves.
+It was that **feature flags usually escape the type system**.
+
+### The idea behind Flagbase
+
+Flagbase started as an experiment: *What if feature flags were treated as a first-class, typed API instead of runtime strings?*
+
+The principles are simple:
+
+- **Type-first**: flags should be known at build time
+- **Generated, not guessed**: no magic strings
+- **Minimal setup**: works locally without heavy infrastructure
+- **Developer-focused**: designed for small teams and solo builders
+
+Instead of asking “Does this flag exist?”, I want the compiler to already know the answer.
+
+### What I’m building right now
+
+Flagbase is still early, but the focus is clear:
+
+- a CLI for defining and generating typed flags,
+- schemas that stay in sync with code,
+- a foundation that can support gradual rollouts and experiments,
+- and a system that feels native to TypeScript, not bolted on.
+
+I’m intentionally moving slowly—designing the core before scaling the surface area.
+
+### What I *don’t* know yet
+
+There’s still a lot I’m figuring out:
+
+- whether this approach resonates with other developers,
+- how teams will actually use it in real projects,
+- where the sharp edges are.
+
+And that’s okay.
+
+I’m building Flagbase in public because I believe good tools come from real feedback, not assumptions.
+
+### Closing thoughts
+
+I didn’t start building Flagbase because I was an expert in feature flags.
+I started building it because I finally understood the *problem* - and felt there was room to do better, especially for TypeScript developers.
+
+If you’ve ever avoided feature flags because they felt heavy, unsafe, or overkill, I’d love to hear your thoughts. And if you think this approach is wrong, I’d love to hear that too.
+
+That’s how better tools get built.

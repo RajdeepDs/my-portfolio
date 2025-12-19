@@ -53,7 +53,7 @@ html {
 }
 
 .prose a {
-    @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+    @apply underline text-gray-900 transition-all decoration-gray-400 underline-offset-2 decoration-[0.1em];
 }
 
 .prose .anchor:after {
@@ -89,7 +89,7 @@ html {
 }
 
 .prose p {
-    @apply my-4 text-neutral-800 dark:text-neutral-200;
+    @apply my-4 text-gray-600;
 }
 
 .prose h1 {
@@ -109,15 +109,19 @@ html {
 }
 
 .prose strong {
-    @apply font-medium;
+    @apply font-medium text-gray-900;
+}
+
+.prose em {
+    @apply text-gray-900 italic;
 }
 
 .prose ul {
-    @apply list-disc pl-6;
+    @apply list-disc pl-6 text-gray-600;
 }
 
 .prose ol {
-    @apply list-decimal pl-6;
+    @apply list-decimal pl-6 text-gray-600;
 }
 
 .prose> :first-child {
