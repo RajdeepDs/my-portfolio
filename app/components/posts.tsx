@@ -11,29 +11,26 @@ export function BlogPosts() {
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       {sortedBlogs.slice(0, 2).map((post) => (
         <Link
-          className="mb-2 flex flex-col space-y-1"
+          className="flex flex-col rounded-md border border-gray-300 border-dashed px-3 py-1 no-underline transition-colors duration-150 ease-initial hover:bg-neutral-50 sm:py-3"
           href={`/blog/${post.slug}`}
           key={post.slug}
         >
-          <div className="flex w-full flex-col items-center gap-1 md:flex-row">
-            <p className="w-[150px] text-neutral-600 text-sm tabular-nums dark:text-neutral-400">
-              {formatDate(post.metadata.publishedAt, false)}
-            </p>
-            <p className="text-neutral-900 tracking-tight dark:text-neutral-100">
-              {post.metadata.title}
-            </p>
-          </div>
+          <p className="flex items-center gap-1 text-[0.9375rem]">
+            {post.metadata.title}
+          </p>
+          <p className="text-gray-500 text-sm tabular-nums leading-5 tracking-wide">
+            {formatDate(post.metadata.publishedAt, false)}
+          </p>
         </Link>
       ))}
-      <Link
-        className="text-neutral-600 text-sm underline underline-offset-1 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-        href="/blog"
-      >
-        See all blogs
-      </Link>
+      {allBlogs.length > 4 && (
+        <Link className="mt-4 font-medium text-sm" href="/blog">
+          See all blogs
+        </Link>
+      )}
     </div>
   );
 }

@@ -1,23 +1,28 @@
 import { formatDate, getBlogPosts } from "app/blog/utils";
 import { CustomMDX } from "app/components/mdx";
 import { baseUrl } from "app/sitemap";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
+  const allPosts = getBlogPosts();
 
-  return posts.map((post) => ({
+  return allPosts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export async function generateMetadata({ params }) {
-  const posts = await getBlogPosts();
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const allPosts = getBlogPosts();
   const { slug } = await params;
-  const post = posts.find((post) => post.slug === slug);
+  const blogPost = allPosts.find((p) => p.slug === slug);
 
-  if (!post) {
-    return;
+  if (!blogPost) {
+    return {};
   }
 
   const {
@@ -25,7 +30,7 @@ export async function generateMetadata({ params }) {
     publishedAt: publishedTime,
     summary: description,
     image,
-  } = post.metadata;
+  } = blogPost.metadata;
 
   const ogImage = image
     ? image
@@ -39,7 +44,7 @@ export async function generateMetadata({ params }) {
       description,
       type: "article",
       publishedTime,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/blog/${blogPost.slug}`,
       images: [{ url: ogImage }],
     },
     twitter: {
@@ -52,11 +57,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Blog({ params }) {
-  const posts = await getBlogPosts();
+  const allPosts = getBlogPosts();
   const { slug } = await params;
-  const post = posts.find((post) => post.slug === slug);
+  const blogPost = allPosts.find((p) => p.slug === slug);
 
-  if (!post) {
+  if (!blogPost) {
     notFound();
   }
 
@@ -67,14 +72,14 @@ export default async function Blog({ params }) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${baseUrl}/blog/${post.slug}`,
+            headline: blogPost.metadata.title,
+            datePublished: blogPost.metadata.publishedAt,
+            dateModified: blogPost.metadata.publishedAt,
+            description: blogPost.metadata.summary,
+            image: blogPost.metadata.image
+              ? `${baseUrl}${blogPost.metadata.image}`
+              : `/og?title=${encodeURIComponent(blogPost.metadata.title)}`,
+            url: `${baseUrl}/blog/${blogPost.slug}`,
             author: {
               "@type": "Person",
               name: "My Portfolio",
@@ -82,19 +87,18 @@ export default async function Blog({ params }) {
           }),
         }}
         suppressHydrationWarning
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         type="application/ld+json"
       />
       <h1 className="title font-semibold text-2xl tracking-tighter">
-        {post.metadata.title}
+        {blogPost.metadata.title}
       </h1>
       <div className="mt-2 mb-8 flex items-center justify-between text-sm">
         <p className="text-neutral-600 text-sm dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
+          {formatDate(blogPost.metadata.publishedAt)}
         </p>
       </div>
-      <article className="prose">
-        <CustomMDX source={post.content} />
+      <article className="prose text-[0.9375rem]">
+        <CustomMDX source={blogPost.content} />
       </article>
     </section>
   );
