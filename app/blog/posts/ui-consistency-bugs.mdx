@@ -1,0 +1,79 @@
+---
+title: "Why UI Consistency Bugs are Harder than Crashes"
+publishedAt: '2025-12-23'
+summary: 'Crashes are obvious. UI consistency bugs are not.'
+---
+
+Crashes are obvious. UI consistency bugs are not.
+
+When an app crashes, users complain immediately. Logs show up. Errors point somewhere concrete.
+But when the UI shows one thing and the system behaves another way, nothing breaks loudly.
+
+The app keeps running — and users slowly stop trusting it.
+
+Over time, I’ve realized that these “silent” bugs are far harder to debug than crashes, and often far more damaging in real products.
+
+
+### What a UI consistency bug actually is
+
+A UI consistency bug isn’t about something being completely wrong — it’s about something being **partially right**.
+
+One part of the system believes a change happened. Another part disagrees.
+
+For example, a user makes a change and hits **Save**. The UI updates and looks correct, but another part of the system still operates on stale data. Nothing crashes. No error appears. But the system is now lying to the user.
+
+That gap between what the UI claims and what the system actually guarantees is where consistency bugs live.
+
+### Why do these bugs survive code reviews
+
+These bugs survive reviews because no single line of code looks incorrect.
+
+Each piece makes sense in isolation. State updates correctly. The UI re-renders. Tests pass. Even manual testing often looks fine.
+
+The failure only appears when the system is observed as a whole — across views, across interactions, or over time.
+
+Maintainers and reviewers usually validate correctness locally:
+
+- Does this component behave correctly?
+- Does this API return the expected data?
+- Does the happy path work?
+
+UI consistency bugs rarely break the happy path. They emerge from **implicit assumptions between layers** — assumptions that no single file owns.
+
+That’s why they often appear “out of nowhere” in production, even after careful reviews.
+
+### How my debugging approach changed
+
+Earlier, my instinct was to ask:
+
+> Why is this broken?
+
+Now I start with a different question:
+
+> Which part of the system is allowed to be wrong?
+
+When debugging these issues, I no longer trust the UI by default. I try to reproduce the bug in different scenarios, then trace the flow of data from its source of truth outward.
+
+Instead of patching the visible symptom, I look for:
+
+- duplicated state
+- derived data that isn’t actually derived
+- logic that exists in more than one place
+
+Many times, the code that *looks* responsible isn’t the real cause. The bug disappears not because it was fixed directly, but because the underlying inconsistency was removed.
+
+At that point, debugging becomes less about writing code and more about **eliminating ambiguity**.
+
+
+### Why boring consistency matters more than features
+
+Users can forgive missing features.
+They rarely forgive untrustworthy behavior.
+
+An app that behaves predictably builds confidence. An app that occasionally contradicts itself slowly erodes it.
+
+Reliable software isn’t impressive.
+It doesn’t demo well.
+But it’s what makes users comfortable trusting the next change.
+
+And trust, once lost, is much harder to debug than any crash.

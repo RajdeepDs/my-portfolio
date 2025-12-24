@@ -130,6 +130,14 @@ html {
     margin-bottom: 1.25em !important;
 }
 
+.prose blockquote {
+    @apply border-l-4 border-gray-400 pl-4 italic text-gray-600;
+}
+
+.prose blockquote p {
+    @apply text-gray-900;
+}
+
 pre::-webkit-scrollbar {
     display: none;
 }
