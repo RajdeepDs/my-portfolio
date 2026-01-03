@@ -71,6 +71,12 @@ export default function Page() {
           Blogs
         </span>
         <BlogPosts />
+        <Link
+          className="text-gray-600 text-sm hover:underline hover:underline-offset-2"
+          href={"/blog"}
+        >
+          See all blogs
+        </Link>
       </div>
       <div className="-mb-3 mt-8 sm:mt-12">
         <span className="mb-5 block text-[0.9375rem] text-gray-600 sm:mb-4">

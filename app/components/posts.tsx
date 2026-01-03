@@ -11,7 +11,7 @@ export function BlogPosts() {
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="mb-4 flex flex-col gap-2">
       {sortedBlogs.slice(0, 3).map((post) => (
         <Link
           className="flex flex-col rounded-md border border-gray-300 border-dashed px-3 py-1 no-underline transition-colors duration-150 ease-initial hover:bg-neutral-50 sm:py-3"
