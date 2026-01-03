@@ -1,0 +1,78 @@
+---
+title: "What Contributing to a Large Open-Source Codebase Taught Me"
+publishedAt: '2026-01-03'
+summary: 'Lessons I learned from contributing to major open-source projects.'
+---
+
+Over the past few weeks, I've been contributing to large open-source codebases like [Twenty CRM](https://twenty.com) (and previously [Cal.com](https://cal.com/)).
+
+Working on real issues in a production-scale project taught me lessons I never really picked up from personal projects or tutorials.
+
+This post isn't about how to contribute to open source, but about what changes in your thinking when you work inside a large, shared codebase.
+
+
+### Reading code is the real work
+
+I realized that fixing the issue itself wasn't the hard part.
+
+Understanding **where** the issue should be fixed took most of the time.
+
+Before jumping into a fix, I usually start by reproducing the issue and tracing where it originates. That process alone often takes a significant amount of time. I go through multiple folders and files, trying to understand what each part of the code is responsible for and how different pieces fit together.
+
+In a large and mature open-source codebase, this is expected. I've noticed that when I'm new to a particular area of the code, simply building enough context can easily take half a day.
+
+Directly jumping into a fix without understanding the existing patterns, naming conventions, and coding style can be risky. It not only makes the change harder to review but can also introduce subtle issues that affect maintainability in the long run.
+
+
+### Small changes can have a real impact
+
+The bugs I worked on were not complex, but their impact was very visible to users.
+It reminded me that in real products, **"small"** bugs are often the most painful ones.
+
+I've worked on several bug fixes that initially looked like simple UI updates, not reflecting immediately, empty groups not hiding correctly in list views, field views not persisting, navigation issues, and more. On the surface, these appeared to be minor UI problems.
+
+In reality, they had a serious impact on the product and user experience, often breaking important flows. As a builder, I don't want users to face these kinds of issues. A smooth and predictable experience matters a lot, especially in tools people rely on daily.
+
+In real-world production apps like Twenty, there are also many edge cases to consider. Fixing one issue without accounting for those cases can easily lead to new bugs elsewhere.
+
+
+### Most bugs are about state, not UI
+
+I've noticed that many bugs appear in the UI, but their root cause usually lives somewhere deeper in the state or side effects. The UI is often just the place where the problem becomes visible.
+
+In one of the issues I worked on, the problem initially looked like a navigation bug. But after digging deeper, it turned out to be related to the stale state being preserved even after a rename operation. The UI was behaving correctly based on the data it was receiving, the real issue was that the underlying state was no longer in sync with the updated route.
+
+This made me realize that debugging in large applications is less about tweaking UI components and more about understanding data flow, state transitions, and side effects. Once you understand how the state moves through the system, many "UI bugs" start making a lot more sense.
+
+
+### Code reviews matter more than merges
+
+Another important lesson for me was how valuable code reviews are.
+
+Getting a PR merged feels good, but the real learning often happens during the review process. Reviews force you to justify your decisions, rethink naming, and consider edge cases you might have missed.
+
+In a large codebase, your change doesn't exist in isolation. Reviewers look at how it fits into existing patterns and whether it introduces long-term maintenance risks. This feedback loop helped me write safer and more intentional code, instead of just focusing on making the fix work.
+
+Over time, I've started seeing reviews less as gatekeeping and more as a collaborative process that improves both the code and the contributor.
+
+
+### How this changed how I approach side projects
+
+Contributing to a large open-source codebase made me much more conscious of how state behaves over time, not just how features work in isolation.
+
+Earlier, when building side projects, my focus was mostly on whether something worked in the happy path. If the UI updated correctly after an action, I considered the feature done. Working on real bugs in **Twenty** showed me how easily things can break when state changes are only partially handled.
+
+For example, a rename operation might look complete once the UI reflects the new name. But if some part of the application is still holding on to an old state, such as a memorized navigation route, the bug only shows up later, in a completely different flow.
+
+That experience changed how I think about "done." I now actively ask myself what else depends on this state, what happens after this action, and whether anything needs to be explicitly synced or cleaned up. Even in my own projects, I try to trace state changes beyond the immediate UI update.
+
+Instead of just making things work, I've started paying more attention to how changes propagate through the system and how they behave over time.
+
+
+### Final thoughts
+
+Contributing to a large open-source project can feel intimidating at first. The codebase is big, the context takes time to build, and progress can feel slow.
+
+But you don't need to understand everything to contribute. You just need to understand one problem deeply enough to fix it well.
+
+For me, working on a large shared codebase like **Twenty CRM** has been one of the most practical ways to grow as an engineer. It forced me to slow down, think more carefully, and focus on the parts of engineering that really matter in production systems.
